@@ -19,7 +19,7 @@ export class RecipeService {
         new Recipe(
             'Tacos',
             'Flour tortilla with seasoned ground kitties.',
-            'https://asset.homechef.com/uploads/meal/plated/3690/homechef_Korean_Pork_Tacos__9_of_9_-5c7c5ed50f16cb68b411316c72d5df43-5c7c5ed50f16cb68b411316c72d5df43.jpg',
+            'https://www.tacobueno.com/assets/food/tacos/Taco_Crispy_Beef_990x725.jpg',
             [
                 new Ingredient('Flour Tortilla',8),
                 new Ingredient('Ground Beef (lb)',1),
