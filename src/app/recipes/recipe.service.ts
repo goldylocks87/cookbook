@@ -26,7 +26,7 @@ export class RecipeService {
                 new Ingredient('Flour Tortilla',8),
                 new Ingredient('Ground Beef (lb)',1),
                 new Ingredient('Taco Seasoning (tbs)',2),
-                new Ingredient('Water (Cup)',.25),
+                new Ingredient('Water (Cup)',1),
                 new Ingredient('Shredded Lettuce (Cup)',2),
                 new Ingredient('Shredded Cheese (Cup)',2),
                 new Ingredient('Diced Tomatoes (Cup)',2),
@@ -53,4 +53,8 @@ export class RecipeService {
       this.recipesChanged.next( this.recipes.slice() );
     }
 
+    removeRecipe(id: number) {
+      this.recipes.splice(id, 1);
+      this.recipesChanged.next( this.recipes.slice() );
+    }
 }
