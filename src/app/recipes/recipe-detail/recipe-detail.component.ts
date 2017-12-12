@@ -43,5 +43,5 @@ export class RecipeDetailComponent implements OnInit {
     this.recipeService.removeRecipe( this.id );
     this.router.navigate( ['../'], { relativeTo: this.route } );
   }
-  }
+
 }
