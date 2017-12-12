@@ -1,9 +1,11 @@
-//import { } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 
 export class RecipeService {
+
+    recipesChanged = new Subject<Recipe[]>();
 
     private recipes: Recipe[] = [
         new Recipe(
@@ -40,4 +42,15 @@ export class RecipeService {
     getRecipe( id: number ) {
         return this.recipes[id];
     }
+
+    addRecipe(recipe: Recipe) {
+      this.recipes.push(recipe);
+      this.recipesChanged.next( this.recipes.slice() );
+    }
+
+    updateRecipe(id: number, newRecipe: Recipe) {
+      this.recipes[id] = newRecipe;
+      this.recipesChanged.next( this.recipes.slice() );
+    }
+
 }
