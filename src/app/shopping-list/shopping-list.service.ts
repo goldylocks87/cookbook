@@ -12,6 +12,11 @@ export class ShoppinglistService {
       new Ingredient('Oranges', 8)
     ];
 
+    setIngredients(ingredients: Ingredient[]) {
+      this.ingredients = ingredients;
+      this.publishUpdates();
+    }
+
     getIngredient(id: number) {
       return this.ingredients[id];
     }
@@ -22,22 +27,26 @@ export class ShoppinglistService {
 
     addIngredient(ingredient: Ingredient) {
       this.ingredients.push(ingredient);
-      this.ingredientChanged.next( this.ingredients.slice() );
+      this.publishUpdates();
     }
 
     addIngredientArray(newIngredients: Ingredient[]) {
       //this.ingredients.push.apply( this.ingredients, newIngredients );
       this.ingredients.push(...newIngredients); // es6 spread to append array to array
-      this.ingredientChanged.next( this.ingredients.slice() );
+      this.publishUpdates();
     }
 
     updateIngredient(id: number, updatedIngredient: Ingredient) {
       this.ingredients[id] = updatedIngredient;
-      this.ingredientChanged.next( this.ingredients.slice() );
+      this.publishUpdates();
     }
 
     removeIngredient(id: number) {
       this.ingredients.splice(id,1);
+      this.publishUpdates();
+    }
+
+    publishUpdates() {
       this.ingredientChanged.next( this.ingredients.slice() );
     }
 

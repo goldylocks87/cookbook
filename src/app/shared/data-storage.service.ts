@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 
-import { RecipeService } from '../recipes/recipe.service';
 import { Recipe } from '../recipes/recipe.model';
+import { RecipeService } from '../recipes/recipe.service';
+import { ShoppinglistService } from '../shopping-list/shopping-list.service';
 
 @Injectable()
 export class DataStorageService {
 
   constructor(private http: Http,
-              private recipeService: RecipeService) {  }
+              private recipeService: RecipeService,
+              private ingredientService: ShoppinglistService ) {  }
 
   storeRecipes() {
     return this.http.put( 'https://cookbook-v1.firebaseio.com/recipes.json', this.recipeService.getRecipes() );
@@ -32,6 +34,19 @@ export class DataStorageService {
       .subscribe(
         (recipes: Recipe[]) => {
           this.recipeService.setRecipes( recipes ); // use response from WS
+        }
+      );
+  }
+
+  storeIngredients() {
+    return this.http.put( 'https://cookbook-v1.firebaseio.com/ingredients.json', this.ingredientService.getIngredients() );
+  }
+
+  fetchIngredients() {
+    this.http.get( 'https://cookbook-v1.firebaseio.com/ingredients.json' )
+      .subscribe(
+        (response: Response) => {
+          this.ingredientService.setIngredients( response.json() ); // use response from WS
         }
       );
   }

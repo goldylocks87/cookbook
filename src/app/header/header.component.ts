@@ -15,10 +15,14 @@ export class HeaderComponent {
     this.dataStorage.storeRecipes().subscribe(
       (response: Response) => { console.log(response); }
     );
+    this.dataStorage.storeIngredients().subscribe(
+      (response: Response) => { console.log(response); }
+    );
   }
 
   onFetchData() {
     this.dataStorage.fetchRecipes();
+    this.dataStorage.fetchIngredients();
   }
 
 }
