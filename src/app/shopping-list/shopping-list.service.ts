@@ -8,8 +8,8 @@ export class ShoppinglistService {
     ingredientEditing = new Subject<number>();
 
     private ingredients: Ingredient[] = [
-      new Ingredient('Apples', 10),
-      new Ingredient('Oranges', 8)
+      // new Ingredient('Apples', 10, 'each'),
+      // new Ingredient('Oranges', 8, 'each')
     ];
 
     setIngredients(ingredients: Ingredient[]) {

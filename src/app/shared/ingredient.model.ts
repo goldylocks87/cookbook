@@ -1,6 +1,8 @@
 export class Ingredient {
     // instead of first declaring properties typescript supports this shorthand
-    constructor( public name: string, public amount: number) {
+    constructor(public name: string,
+                public amount: number,
+                public uom: string) {
 
     }
 }

@@ -3,18 +3,27 @@ import { Http, Response } from '@angular/http';
 import 'rxjs/Rx';
 
 import { Recipe } from '../recipes/recipe.model';
+import { Ingredient } from './ingredient.model';
 import { RecipeService } from '../recipes/recipe.service';
 import { ShoppinglistService } from '../shopping-list/shopping-list.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class DataStorageService {
 
   constructor(private http: Http,
               private recipeService: RecipeService,
-              private ingredientService: ShoppinglistService ) {  }
+              private ingredientService: ShoppinglistService,
+              private authService: AuthService ) {
+
+    this.fetchRecipes();
+    this.fetchIngredients();
+  }
 
   storeRecipes() {
-    return this.http.put( 'https://cookbook-v1.firebaseio.com/recipes.json', this.recipeService.getRecipes() );
+    const token = this.authService.getToken();
+    return this.http.put( 'https://cookbook-v1.firebaseio.com/recipes.json?auth=' + token,
+                          this.recipeService.getRecipes() );
   }
 
   fetchRecipes() {
@@ -39,14 +48,27 @@ export class DataStorageService {
   }
 
   storeIngredients() {
-    return this.http.put( 'https://cookbook-v1.firebaseio.com/ingredients.json', this.ingredientService.getIngredients() );
+    const token = this.authService.getToken();
+    return this.http.put( 'https://cookbook-v1.firebaseio.com/ingredients.json?auth=' + token,
+                          this.ingredientService.getIngredients() );
   }
 
   fetchIngredients() {
     this.http.get( 'https://cookbook-v1.firebaseio.com/ingredients.json' )
-      .subscribe(
+      .map(
         (response: Response) => {
-          this.ingredientService.setIngredients( response.json() ); // use response from WS
+          const ingredients: Ingredient[] = response.json();
+          for( let ingredient of ingredients ) {
+            if( !ingredient['uom'] ) {
+              ingredient['uom'] = 'each';
+            }
+          }
+          return ingredients;
+        }
+      )
+      .subscribe(
+        (ingredients: Ingredient[]) => {
+          this.ingredientService.setIngredients( ingredients ); // use response from WS
         }
       );
   }

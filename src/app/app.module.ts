@@ -19,6 +19,10 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { RecipeService } from './recipes/recipe.service';
 import { DataStorageService } from './shared/data-storage.service';
 import { TruncatePipe } from './shared/truncate.pipe';
+import { FilterPipe } from './shared/filter.pipe';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,10 @@ import { TruncatePipe } from './shared/truncate.pipe';
     DropdownDirective,
     RecipeStartComponent,
     RecipeEditComponent,
-    TruncatePipe
+    TruncatePipe,
+    FilterPipe,
+    SignupComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,12 @@ import { TruncatePipe } from './shared/truncate.pipe';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [ShoppinglistService, RecipeService, DataStorageService],
+  providers: [
+    ShoppinglistService,
+    RecipeService,
+    DataStorageService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

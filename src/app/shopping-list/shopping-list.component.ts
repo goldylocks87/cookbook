@@ -12,6 +12,7 @@ import { ShoppinglistService } from './shopping-list.service';
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ingredients: Ingredient[];
+  filteredString = '';
   private subscription: Subscription;
 
   constructor(private shoppinglistService: ShoppinglistService) { }
