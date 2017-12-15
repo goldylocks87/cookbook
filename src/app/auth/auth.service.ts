@@ -10,7 +10,6 @@ export class AuthService {
   constructor(private router: Router) {}
 
   signupUser( email: string, password: string ) {
-
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         response => {
@@ -29,7 +28,6 @@ export class AuthService {
   }
 
   signinUser( email: string, password: string ) {
-
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         response => {
