@@ -1,8 +1,8 @@
 import * as firebase from 'firebase';
 import { Router } from '@angular/router/';
-import { Injector } from '@angular/core/';
+import { Injectable } from '@angular/core/';
 
-@Injector()
+@Injectable()
 export class AuthService {
 
   token: string;
