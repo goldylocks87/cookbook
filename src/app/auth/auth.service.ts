@@ -10,21 +10,34 @@ export class AuthService {
   constructor(private router: Router) {}
 
   signupUser( email: string, password: string ) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(
-        response => {
-          firebase.auth().currentUser.getIdToken()
-            .then(
-              token => this.token = token
-            )
-            .catch(
-              error => console.log(error)
-            );
-        }
-      )
-      .catch(
-        error => alert(error.message)
-      );
+    return new Promise((resolve, reject) => {
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(
+          response => {
+            firebase.auth().currentUser.getIdToken()
+              .then(
+                (token) => {
+                  this.token = token;
+                }
+              )
+              .catch(
+                (error) => {
+                  console.log(error);
+                  reject(error.message);
+                }
+              );
+              resolve('You have successfully logged in!');
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error);
+            reject(error.message);
+          }
+        );
+
+      });
   }
 
   signinUser( email: string, password: string ) {
@@ -47,10 +60,20 @@ export class AuthService {
   }
 
   getToken() {
-    firebase.auth().currentUser.getIdToken().then(
-      token => this.token = token
-    );
-    return this.token;
+    return new Promise((resolve, reject) => {
+
+      firebase.auth().currentUser.getIdToken()
+        .then(
+          (token) => {
+            this.token = token;
+            resolve(this.token);
+          }
+        )
+        .catch(
+          error => reject(error)
+        );
+
+    });
   }
 
   isAuthenticated() {

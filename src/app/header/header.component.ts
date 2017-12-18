@@ -14,12 +14,8 @@ export class HeaderComponent {
               private authService: AuthService) {  }
 
   onSaveData() {
-    this.dataStorage.storeRecipes().subscribe(
-      (response: Response) => { console.log(response); }
-    );
-    this.dataStorage.storeIngredients().subscribe(
-      (response: Response) => { console.log(response); }
-    );
+    this.dataStorage.storeRecipes();
+    this.dataStorage.storeIngredients();
   }
 
   onFetchData() {

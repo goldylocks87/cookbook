@@ -11,6 +11,8 @@ import { AuthService } from '../auth/auth.service';
 @Injectable()
 export class DataStorageService {
 
+  token: string;
+
   constructor(private http: Http,
               private recipeService: RecipeService,
               private ingredientService: ShoppinglistService,
@@ -21,9 +23,17 @@ export class DataStorageService {
   }
 
   storeRecipes() {
-    const token = this.authService.getToken();
-    return this.http.put( 'https://cookbook-v1.firebaseio.com/recipes.json?auth=' + token,
-                          this.recipeService.getRecipes() );
+    this.authService.getToken()
+      .then(
+        response => {
+          this.token = <string>response;
+          this.http.put( 'https://cookbook-v1.firebaseio.com/recipes.json?auth=' + this.token,
+                          this.recipeService.getRecipes() )
+            .subscribe(
+              httpResponse => console.log(httpResponse)
+            );
+        })
+      .catch( error => console.log(error) );
   }
 
   fetchRecipes() {
@@ -48,9 +58,17 @@ export class DataStorageService {
   }
 
   storeIngredients() {
-    const token = this.authService.getToken();
-    return this.http.put( 'https://cookbook-v1.firebaseio.com/ingredients.json?auth=' + token,
-                          this.ingredientService.getIngredients() );
+    this.authService.getToken()
+      .then(
+        response => {
+          this.token = <string>response;
+          this.http.put( 'https://cookbook-v1.firebaseio.com/ingredients.json?auth=' + this.token,
+                          this.ingredientService.getIngredients() )
+            .subscribe(
+              httpResponse => console.log(httpResponse)
+            );
+        })
+      .catch( error => console.log(error) );
   }
 
   fetchIngredients() {

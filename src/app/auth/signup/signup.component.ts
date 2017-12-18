@@ -10,6 +10,8 @@ import { AuthService } from '../auth.service';
 })
 export class SignupComponent implements OnInit {
 
+  response: any;
+
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -19,7 +21,13 @@ export class SignupComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
 
-    this.authService.signupUser(email, password);
+    this.authService.signupUser(email, password)
+      .then(
+        response => console.log(response)
+      )
+      .catch(
+        error => this.response = error
+      );
   }
 
 }
